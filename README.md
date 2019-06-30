@@ -1,2 +1,2 @@
-# socket-io-chat
-Basic Socket.IO Chat Application 
+# socket-io-chat-app
+Socket.IO Chat App

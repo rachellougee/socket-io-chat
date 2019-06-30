@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Socket IO Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      form { padding: 20px; position: fixed; bottom: 0; width: 100%; padding-right: 50px;}
+      #messages { list-style-type: none; margin: 0; padding: 0; width: 100%;}
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee;} 
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <ul id="messages"></ul>
+      </div>
+      <div class="row">
+            <form action="">
+                 Your name: <input id="username" autocomplete="off" type="text">
+                  Message: <input id="msg" autocomplete="off" type="text" class="form-control" placeholder="Message..." aria-label="Message...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">Send</button>
+                  </span>
+            </form>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      socket.on('connect', () => {
+        socket.emit('join', 'A user connected!');
+      });
+      socket.on('new_user', (data) => {
+        $('#messages').append($('<li>').text(data));
+      });
+
+      $('form').submit(() => {
+        let user = $('#username').val();
+        let msg = $('#msg').val();
+        socket.emit('new_messaage', { user: user, msg:msg }); //send to server
+        $('#msg').val('');
+        return false;
+      });
+
+       //receive dispatch_message event from server and send to everyone
+      socket.on('dispatch_message', (data) => {
+        $('#messages').append($('<li>').text(data.user + ': '+ data.msg));
+      });
+    </script>
+  </body>
+</html>
