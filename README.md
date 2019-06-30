@@ -1,2 +1,2 @@
 # socket-io-chat-app
-Socket.IO Chat App
+Basic real-time chat application using Express and Socket.io
