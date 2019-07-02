@@ -1,2 +1,4 @@
 # socket-io-chat-app
-Basic real-time chat application using Express and Socket.io
+Real-time chat application using Express and Socket.io
+
+https://socket.io/docs/
